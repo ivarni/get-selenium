@@ -6,9 +6,10 @@ import {
     checkHash,
 } from './util';
 
+const filename = 'selenium.jar';
+
 const minorVersion = '2.53';
 const version = '2.53.0';
-const filename = 'selenium.jar';
 const seleniumUrl = `http://selenium-release.storage.googleapis.com/${minorVersion}/selenium-server-standalone-${version}.jar`;
 
 export default async function(targetFolder) {

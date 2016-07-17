@@ -5,7 +5,6 @@ import extract from 'extract-zip';
 import { createHash } from 'crypto';
 
 const parseHashes = rawHash => {
-    // format: crc32c=qRiQ9g==, md5=AAQvmRLFWmGR17P+ASORNQ==
     const parse = (memo, hash) => {
         const result = memo;
         const parts = hash.trim().split('=');

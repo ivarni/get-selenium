@@ -8,8 +8,7 @@ import {
     unzip,
 } from './util';
 
-const filename = 'chromedriver_linux64.zip';
-const unzipFilename = 'chromedriver';
+const filename = 'chromedriver';
 
 const latestVersionUrl = 'http://chromedriver.storage.googleapis.com/LATEST_RELEASE';
 const fallbackVersion = '2.22';
@@ -28,28 +27,29 @@ const getArchitecture = () => {
     const platform = process.platform;
     const bitness = process.arch.substring(1);
     switch (platform) {
-    case 'linux':
-        return { platform, bitness };
-    case 'darwin':
-        return { platform: 'mac', bitness: '32' };
-    case 'win32':
-        return { platform: 'win', bitness: '32' };
-    default:
-        throw new Error(`Unsupported platform: ${platform}`);
+        case 'linux':
+            return { platform, bitness };
+        case 'darwin':
+            return { platform: 'mac', bitness: '32' };
+        case 'win32':
+            return { platform: 'win', bitness: '32' };
+        default:
+            throw new Error(`Unsupported platform: ${platform}`);
     }
 };
 
 export default async function(targetFolder) {
-    const file = path.join(targetFolder, filename);
+    const { platform, bitness } = getArchitecture();
+    const downloadFilename = `chromedriver_${platform}${bitness}.zip`;
 
     const version = await getLatestVersion();
-    const { platform, bitness } = getArchitecture();
-    const url = `https://chromedriver.storage.googleapis.com/${version}/chromedriver_${platform}${bitness}.zip`;
+    const url = `https://chromedriver.storage.googleapis.com/${version}/${downloadFilename}`;
 
-    const exists = fileExists(path.join(targetFolder, unzipFilename));
+    const exists = fileExists(path.join(targetFolder, filename));
 
     if (!exists) {
-        const hash = await getFile(url, targetFolder, filename);
+        const file = path.join(targetFolder, downloadFilename);
+        const hash = await getFile(url, targetFolder, downloadFilename);
         await checkHash(file, hash);
         await unzip(file);
     }
