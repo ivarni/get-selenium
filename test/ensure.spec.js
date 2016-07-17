@@ -6,7 +6,7 @@ import mkdirp from 'mkdirp';
 import fs from 'fs';
 import glob from 'glob';
 
-import ensure from '../src';
+import { ensure } from '../src';
 
 const dir = bluebird.promisify(tmp.dir);
 const makeDir = bluebird.promisify(mkdirp);
