@@ -1,0 +1,6 @@
+# NPM
+node_modules
+
+# IDE stuff
+get-selenium.sublime-project
+get-selenium.sublime-workspace
