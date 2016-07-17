@@ -1,6 +1,7 @@
-import selenium from './src/selenium';
-import chromedriver from './src/chromedriver';
+import selenium from './selenium';
+import chromedriver from './chromedriver';
 
+/* eslint-disable no-console */
 export default async function(path) {
     console.log('Getting selenium');
     await selenium(path);
@@ -10,3 +11,4 @@ export default async function(path) {
     await chromedriver(path);
     console.log('Got chromedriver');
 }
+/* eslint-enable no-console */
