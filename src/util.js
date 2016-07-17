@@ -56,3 +56,12 @@ export const checkHash = (filePath, hash) =>
             });
     });
 
+export const unlink = filePath =>
+    new Promise((resolve, reject) => {
+        fs.unlink(filePath, err => {
+            if (err) {
+                return reject(err);
+            }
+            return resolve();
+        });
+    });

@@ -6,6 +6,7 @@ import {
     checkHash,
     getFile,
     unzip,
+    unlink,
 } from './util';
 
 const filename = 'chromedriver';
@@ -52,5 +53,6 @@ export default async function(targetFolder) {
         const hash = await getFile(url, targetFolder, downloadFilename);
         await checkHash(file, hash);
         await unzip(file);
+        await unlink(file);
     }
 }
