@@ -2,6 +2,9 @@
 node_modules
 npm-debug.log*
 
+# Build files
+dist/
+
 # IDE stuff
 get-selenium.sublime-project
 get-selenium.sublime-workspace
