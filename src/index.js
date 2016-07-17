@@ -1,3 +1,4 @@
+import 'babel-polyfill';
 import selenium from './selenium';
 import chromedriver from './chromedriver';
 
