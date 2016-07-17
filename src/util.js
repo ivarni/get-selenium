@@ -3,6 +3,11 @@ import path from 'path';
 import fs from 'fs';
 import extract from 'extract-zip';
 import { createHash } from 'crypto';
+import request from 'request';
+import rimraf from 'rimraf';
+
+const latestChromedriverVersionUrl = 'http://chromedriver.storage.googleapis.com/LATEST_RELEASE';
+const fallbackChromedriverVersion = '2.22';
 
 const parseHashes = rawHash => {
     const parse = (memo, hash) => {
@@ -17,6 +22,38 @@ const parseHashes = rawHash => {
     const hashes = rawHash.split(',');
     return hashes.reduce(parse, {});
 };
+
+const getLatestChromedriverVersion = () =>
+    new Promise(resolve => {
+        let version = fallbackChromedriverVersion;
+        request.get(latestChromedriverVersionUrl)
+            .on('data', data => { version = data.toString(); })
+            .on('error', error => { throw new Error(error); })
+            .on('end', () => resolve(version.trim()));
+    });
+
+
+const getArchitecture = () => {
+    const platform = process.platform;
+    const bitness = process.arch.substring(1);
+    switch (platform) {
+        case 'linux':
+            return { platform, bitness };
+        case 'darwin':
+            return { platform: 'mac', bitness: '32' };
+        case 'win32':
+            return { platform: 'win', bitness: '32' };
+        default:
+            throw new Error(`Unsupported platform: ${platform}`);
+    }
+};
+
+export const getChromedriverUrl = async function() {
+    const { platform, bitness } = getArchitecture();
+    const downloadFilename = `chromedriver_${platform}${bitness}.zip`;
+    const version = await getLatestChromedriverVersion();
+    return `https://chromedriver.storage.googleapis.com/${version}/${downloadFilename}`;
+}
 
 export const unzip = file =>
     new Promise((resolve, reject) => {
