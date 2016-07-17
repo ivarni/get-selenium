@@ -28,7 +28,6 @@ export const unzip = file =>
         });
     });
 
-
 export const getFile = (url, savePath, saveName) =>
     new Promise((resolve, reject) => {
         let hash;
