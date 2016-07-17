@@ -3,15 +3,15 @@ import bluebird from 'bluebird';
 import tmp from 'tmp';
 import path from 'path';
 
-import ensure from '../src/ensure';
+import ensure from '..';
 
 const dir = bluebird.promisify(tmp.dir);
 
 describe('ensure', function() {
 
-    this.timeout(30000) // slow wifi, yay
-
     let tmpPath;
+
+    this.timeout(30000)
 
     beforeEach(async function() {
         tmpPath = path.join('/', 'home', 'ivarni', 'Downloads');
