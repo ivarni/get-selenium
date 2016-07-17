@@ -7,18 +7,18 @@ import chromedriver from './chromedriver';
 import { unlink } from './util';
 
 /* eslint-disable no-console, func-names */
-const ensure = async function(path) {
+const ensure = async function(target) {
     console.log('Getting selenium');
-    await selenium(path);
+    await selenium(target);
     console.log('Got selenium');
 
     console.log('Getting chromedriver');
-    await chromedriver(path);
+    await chromedriver(target);
     console.log('Got chromedriver');
 };
 
 const update = async function(target) {
-    glob(path.resolve(target, '**/*') , async function(err, files) {
+    glob(path.resolve(target, '**/*'), async function(err, files) {
         // TODO: This doesn't quite work, files are being
         //       cleared too late and I dunno why :`(
         await Promise.all(files.map(file => unlink(file)));

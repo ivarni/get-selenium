@@ -4,7 +4,6 @@ import fs from 'fs';
 import extract from 'extract-zip';
 import { createHash } from 'crypto';
 import request from 'request';
-import rimraf from 'rimraf';
 
 const latestChromedriverVersionUrl = 'http://chromedriver.storage.googleapis.com/LATEST_RELEASE';
 const fallbackChromedriverVersion = '2.22';
@@ -48,7 +47,7 @@ const getArchitecture = () => {
     }
 };
 
-export const getChromedriverUrl = async function() {
+export async function getChromedriverUrl() {
     const { platform, bitness } = getArchitecture();
     const downloadFilename = `chromedriver_${platform}${bitness}.zip`;
     const version = await getLatestChromedriverVersion();
