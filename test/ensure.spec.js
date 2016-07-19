@@ -39,7 +39,8 @@ describe('ensure', function() {
 
     it('downloads selenium and chromedriver', async function() {
         await stat(path.join(tmpPath, 'selenium.jar'));
-        await stat(path.join(tmpPath, 'chromedriver'));
+        const files = await globber(path.join(tmpPath, 'chromedriver*'));
+        expect(files.length).to.be(1);
     });
 
     it('deletes the chromedriver zip archive', async function() {
