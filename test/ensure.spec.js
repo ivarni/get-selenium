@@ -27,7 +27,7 @@ before(async function() {
 
 describe('ensure', function() {
 
-    this.timeout(30000)
+    this.timeout(60000)
 
     beforeEach(async function() {
         await ensure(tmpPath);
