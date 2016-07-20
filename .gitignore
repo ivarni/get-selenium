@@ -4,6 +4,7 @@ npm-debug.log*
 
 # Build files
 dist/
+.nyc_output/
 
 # IDE stuff
 get-selenium.sublime-project
