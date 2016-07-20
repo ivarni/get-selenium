@@ -1,4 +1,3 @@
-import download from 'download';
 import path from 'path';
 import fs from 'fs';
 import extract from 'extract-zip';
@@ -67,7 +66,7 @@ export const unzip = file =>
 export const getFile = (url, savePath, saveName) =>
     new Promise((resolve, reject) => {
         let hash;
-        download(url)
+        request(url)
             .on('response', response => {
                 hash = parseHashes(response.headers['x-goog-hash']).md5;
             })

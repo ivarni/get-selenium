@@ -50,15 +50,14 @@ describe('ensure', function() {
 
 });
 
-// TODO: This doesn't quite work, files are being
-//       cleared too late and I dunno why :`(
-xdescribe('update', function() {
+describe('update', function() {
 
-    this.timeout(30000);
+    this.timeout(120000);
 
     it('deletes and re-downloads binaries', async function() {
         await ensure(tmpPath);
         await update(tmpPath);
+        console.log('test done')
     });
 
 });
