@@ -3,7 +3,7 @@ node_modules
 npm-debug.log*
 
 # Build files
-dist/
+lib/
 .nyc_output/
 
 # IDE stuff

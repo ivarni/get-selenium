@@ -5,6 +5,27 @@
 
 # get-selenium
 
-This is a work in progress with the aim of providing the same API as [selenium-download](https://github.com/groupon/selenium-download) but written in ES6.
+Inspired by [selenium-download](https://github.com/groupon/selenium-download) but written in ES6 instead of CoffeeScript. Motivation was problems getting the original module running on v6 of Node.js.
 
-It's not done.
+## Usage
+
+Install with npm
+```
+npm install get-selenium --save-dev
+```
+
+```javascript
+import { ensure } from 'get-selenium';
+
+ensure('./selenium');
+```
+
+Execution will be blocked untill binaries are downloaded.
+
+## API
+
+### ensure(path)
+Blocks while downloading the latest version of selenium's jar and the appropriate chromedriver executable for your system. If the appropriate files already exist in the `path` then they are not downloaded again.
+
+### update(path)
+Clears out the `path` directory and then calls `ensure`, thus forcing the binaries to be downloaded even if they already exist.

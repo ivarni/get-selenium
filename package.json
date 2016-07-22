@@ -1,15 +1,12 @@
 {
   "name": "get-selenium",
   "version": "1.0.0",
-  "description": "",
-  "main": "dist/index.js",
-  "files": [
-    "dist/"
-  ],
+  "description": "Make sure you've got the selenium jar and the chromedriver executable",
+  "main": "lib/index.js",
   "scripts": {
+    "build": "babel -d lib/. --ignore test/ src/",
     "lint": "eslint src",
-    "transpile": "babel -d dist/ src/",
-    "prepublish": "npm test && npm run transpile",
+    "prepublish": "npm test && npm run build",
     "test": "cross-env NODE_ENV=test node_modules/.bin/nyc node_modules/.bin/mocha --require ./test/setup.js test/",
     "coveralls": "nyc report --reporter=text-lcov | coveralls"
   },
@@ -53,6 +50,9 @@
     "nyc": "^7.0.0",
     "tmp": "0.0.28"
   },
+  "files": [
+    "lib/"
+  ],
   "nyc": {
     "include": [
       "src/**/*.js"
