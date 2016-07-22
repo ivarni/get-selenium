@@ -2,6 +2,7 @@
 [![Dependency Status](https://david-dm.org/ivarni/get-selenium.svg)](https://david-dm.org/ivarni/get-selenium)
 [![devDependency Status](https://david-dm.org/ivarni/get-selenium/dev-status.svg)](https://david-dm.org/ivarni/get-selenium#info=devDependencies)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/ivarni/get-selenium/issues)
+[![Coveralls](https://img.shields.io/coveralls/ivarni/get-selenium.svg?maxAge=2592000)](https://coveralls.io/github/ivarni/get-selenium)
 
 # get-selenium
 
