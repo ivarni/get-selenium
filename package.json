@@ -6,7 +6,7 @@
   "scripts": {
     "build": "babel -d lib/. --ignore test/ src/",
     "lint": "eslint src",
-    "prepublish": "npm test && npm run build",
+    "prepublish": "npm run build",
     "test": "cross-env NODE_ENV=test node_modules/.bin/nyc node_modules/.bin/mocha --require ./test/setup.js test/",
     "coveralls": "nyc report --reporter=text-lcov | coveralls"
   },
