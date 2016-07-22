@@ -18,15 +18,19 @@ npm install get-selenium --save-dev
 ```javascript
 import { ensure } from 'get-selenium';
 
-ensure('./selenium');
+ensure('./selenium').then(
+    () => console.log('selenium and chromedriver present')
+);
 ```
-
-Execution will be blocked untill binaries are downloaded.
 
 ## API
 
 ### ensure(path)
-Blocks while downloading the latest version of selenium's jar and the appropriate chromedriver executable for your system. If the appropriate files already exist in the `path` then they are not downloaded again.
+Downloads the latest version of selenium's jar and the appropriate chromedriver executable for your system. If the appropriate files already exist in the `path` then they are not downloaded again.
+
+Returns a promise that resolves when the files are present.
 
 ### update(path)
 Clears out the `path` directory and then calls `ensure`, thus forcing the binaries to be downloaded even if they already exist.
+
+Returns a promise that resolves when the files are present.
