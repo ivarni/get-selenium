@@ -4,3 +4,6 @@
 
   ### 1.0.1
   - Fix inaccurate (wrong) docs
+
+  ### 1.0.2
+  - If target directory does not exist, create it

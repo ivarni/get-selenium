@@ -5,6 +5,7 @@ import path from 'path';
 import mkdirp from 'mkdirp';
 import fs from 'fs';
 import glob from 'glob';
+import rmrf from 'rimraf';
 
 import {
     ensure,
@@ -23,6 +24,11 @@ before(async function() {
     //tmpPath = path.join('/', 'home', 'ivarni', 'Downloads');
     tmpPath = path.join(await dir(), 'selenium');
     await makeDir(tmpPath);
+    console.log(tmpPath)
+});
+
+after(done => {
+    rmrf(tmpPath, done);
 });
 
 describe('ensure', function() {
@@ -31,10 +37,6 @@ describe('ensure', function() {
 
     beforeEach(async function() {
         await ensure(tmpPath);
-    });
-
-    after(() => {
-        // get rid of the tmp dir
     });
 
     it('downloads selenium and chromedriver', async function() {
@@ -47,6 +49,15 @@ describe('ensure', function() {
         const files = await globber(path.join(tmpPath, 'chromedriver*zip'));
         expect(files.length).to.be(0);
     });
+
+    describe('if target directory does not exist', async function() {
+
+        it('creates it', async function() {
+            await bluebird.promisify(rmrf)(tmpPath);
+            await ensure(tmpPath);
+        });
+
+    })
 
 });
 

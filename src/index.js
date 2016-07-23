@@ -2,15 +2,18 @@ import 'babel-polyfill';
 import bluebird from 'bluebird';
 import glob from 'glob';
 import path from 'path';
+import mkdirp from 'mkdirp';
 
 import selenium from './selenium';
 import chromedriver from './chromedriver';
 import { unlink } from './util';
 
 const globber = bluebird.promisify(glob);
+const makeDir = bluebird.promisify(mkdirp);
 
 /* eslint-disable no-console, func-names */
 const ensure = async function(target) {
+    await makeDir(target);
     console.log('Getting selenium');
     await selenium(target);
     console.log('Got selenium');
