@@ -4,23 +4,31 @@ import fileExists from 'file-exists';
 import {
     getFile,
     checkHash,
+    logger,
 } from './util';
 
 const filename = 'selenium.jar';
 
 const minorVersion = '2.53';
 const version = '2.53.0';
-const seleniumUrl = `http://selenium-release.storage.googleapis.com/${minorVersion}/selenium-server-standalone-${version}.jar`;
+const url = `http://selenium-release.storage.googleapis.com/${minorVersion}/selenium-server-standalone-${version}.jar`;
 
-export default async function(targetFolder) {
-    const file = path.join(targetFolder, filename);
-    const exists = fileExists(file);
+let log = logger;
 
-    if (exists) {
-        return file;
+export default async function(targetFolder, options) {
+    if (!options.verbose) {
+        log = f => f;
     }
+    log(`Checking if ${filename} is present in ${targetFolder}`);
+    const targetFile = path.join(targetFolder, filename);
+    const exists = fileExists(targetFile);
 
-    const hash = await getFile(seleniumUrl, targetFolder, filename);
-    await checkHash(file, hash);
-    return file;
+    if (!exists) {
+        log(`Downloading from ${url}`);
+        const hash = await getFile(url, targetFolder, filename);
+        await checkHash(targetFile, hash);
+        log(`Downloaded ${targetFile}`);
+        return targetFile;
+    }
+    return log('File found');
 }

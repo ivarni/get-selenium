@@ -46,6 +46,8 @@ const getArchitecture = () => {
     }
 };
 
+const time = () => new Date().toTimeString();
+
 export async function getChromedriverUrl() {
     const { platform, bitness } = getArchitecture();
     const downloadFilename = `chromedriver_${platform}${bitness}.zip`;
@@ -100,3 +102,6 @@ export const unlink = filePath =>
             return resolve();
         });
     });
+
+export const logger = message =>
+    console.log(`[${time()}: get-selenium] ${message}`);

@@ -25,12 +25,24 @@ ensure('./selenium').then(
 
 ## API
 
-### ensure(path)
+### ensure(path, options)
 Downloads the latest version of selenium's jar and the appropriate chromedriver executable for your system. If the appropriate files already exist in the `path` then they are not downloaded again.
 
 Returns a promise that resolves when the files are present.
 
-### update(path)
+### update(path, options)
 Clears out the `path` directory and then calls `ensure`, thus forcing the binaries to be downloaded even if they already exist.
 
 Returns a promise that resolves when the files are present.
+
+## options
+
+Optional parameter with default values
+```
+{
+    verbose: true
+}
+```
+
+### verbose
+Logs progress to `console.log`. Set this to `false` if you don't want to clutter the shell.
