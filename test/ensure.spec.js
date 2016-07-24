@@ -21,10 +21,8 @@ const globber = bluebird.promisify(glob);
 let tmpPath;
 
 before(async function() {
-    //tmpPath = path.join('/', 'home', 'ivarni', 'Downloads');
     tmpPath = path.join(await dir(), 'selenium');
     await makeDir(tmpPath);
-    console.log(tmpPath)
 });
 
 after(done => {
@@ -35,29 +33,42 @@ describe('ensure', function() {
 
     this.timeout(60000)
 
-    beforeEach(async function() {
-        await ensure(tmpPath);
+    describe('if target directory exists', async function() {
+
+        beforeEach(async function() {
+            await ensure(tmpPath, { verbose: false });
+        });
+
+        it('downloads selenium and chromedriver', async function() {
+            await stat(path.join(tmpPath, 'selenium.jar'));
+
+            const chromedriver = await globber(path.join(tmpPath, 'chromedriver*'));
+            expect(chromedriver.length).to.be(1);
+
+            const selenium = await(globber(path.join(tmpPath, 'selenium.jar')));
+            expect(selenium.length).to.be(1);
+        });
+
+        it('deletes the chromedriver zip archive', async function() {
+            const chromedriverZip = await globber(path.join(tmpPath, 'chromedriver*zip'));
+            expect(chromedriverZip.length).to.be(0);
+        });
     });
 
-    it('downloads selenium and chromedriver', async function() {
-        await stat(path.join(tmpPath, 'selenium.jar'));
-        const files = await globber(path.join(tmpPath, 'chromedriver*'));
-        expect(files.length).to.be(1);
-    });
 
-    it('deletes the chromedriver zip archive', async function() {
-        const files = await globber(path.join(tmpPath, 'chromedriver*zip'));
-        expect(files.length).to.be(0);
-    });
 
     describe('if target directory does not exist', async function() {
 
         it('creates it', async function() {
             await bluebird.promisify(rmrf)(tmpPath);
-            await ensure(tmpPath);
-        });
+            await ensure(tmpPath, { verbose: false });
+            const chromedriver = await globber(path.join(tmpPath, 'chromedriver*'));
+            expect(chromedriver.length).to.be(1);
 
-    })
+            const selenium = await(globber(path.join(tmpPath, 'selenium.jar')));
+            expect(selenium.length).to.be(1);
+        });
+    });
 
 });
 
@@ -66,9 +77,14 @@ describe('update', function() {
     this.timeout(120000);
 
     it('deletes and re-downloads binaries', async function() {
-        await ensure(tmpPath);
-        await update(tmpPath);
-        console.log('test done')
+        await ensure(tmpPath, { verbose: false });
+        await update(tmpPath, { verbose: false });
+
+        const chromedriver = await globber(path.join(tmpPath, 'chromedriver*'));
+        expect(chromedriver.length).to.be(1);
+
+        const selenium = await(globber(path.join(tmpPath, 'selenium.jar')));
+        expect(selenium.length).to.be(1);
     });
 
 });

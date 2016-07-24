@@ -1,3 +1,6 @@
+## 1.1.0
+- More verbose `console.log` during execution
+- Option to disable said verbose logging
 
 ## 1.0.0
 - First release

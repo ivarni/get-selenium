@@ -7,23 +7,33 @@ import {
     getFile,
     unzip,
     unlink,
+    logger,
 } from './util';
 
 const filename = 'chromedriver';
 
-export default async function(targetFolder) {
-    const url = await getChromedriverUrl();
-    const downloadFilename = url.substring(
-        url.lastIndexOf('/') + 1
-    );
+let log = logger;
 
-    const exists = fileExists(path.join(targetFolder, filename));
+export default async function(targetFolder, options) {
+    if (!options.verbose) {
+        log = f => f;
+    }
+    log(`Checking if ${filename} is present in ${targetFolder}`);
+    const targetFile = path.join(targetFolder, filename);
+    const exists = fileExists(targetFile);
 
     if (!exists) {
-        const file = path.join(targetFolder, downloadFilename);
+        const url = await getChromedriverUrl();
+        log(`Downloading from ${url}`);
+        const downloadFilename = url.substring(url.lastIndexOf('/') + 1);
+        const downloadPath = path.join(targetFolder, downloadFilename);
         const hash = await getFile(url, targetFolder, downloadFilename);
-        await checkHash(file, hash);
-        await unzip(file);
-        await unlink(file);
+        log(`Downloaded ${downloadFilename}`);
+        await checkHash(downloadPath, hash);
+        await unzip(downloadPath);
+        log(`Unzipped ${downloadFilename}`);
+        await unlink(downloadPath);
+        return targetFile;
     }
+    return log('File found');
 }

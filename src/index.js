@@ -11,24 +11,23 @@ import { unlink } from './util';
 const globber = bluebird.promisify(glob);
 const makeDir = bluebird.promisify(mkdirp);
 
-/* eslint-disable no-console, func-names */
-const ensure = async function(target) {
-    await makeDir(target);
-    console.log('Getting selenium');
-    await selenium(target);
-    console.log('Got selenium');
-
-    console.log('Getting chromedriver');
-    await chromedriver(target);
-    console.log('Got chromedriver');
+const defaultOptions = {
+    verbose: true,
 };
 
-const update = async function(target) {
+/* eslint-disable func-names */
+const ensure = async function(target, options = defaultOptions) {
+    await makeDir(target);
+    await selenium(target, options);
+    await chromedriver(target, options);
+};
+
+const update = async function(target, options = defaultOptions) {
     const files = await globber(path.join(target, '**/*'));
     await Promise.all(files.map(file => unlink(file)));
-    await ensure(target);
+    await ensure(target, options);
 };
-/* eslint-enable no-console, func-names */
+/* eslint-enable func-names */
 
 const api = {
     ensure,
