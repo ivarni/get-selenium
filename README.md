@@ -6,7 +6,7 @@
 
 # get-selenium
 
-Inspired by [selenium-download](https://github.com/groupon/selenium-download) but written in ES6 instead of CoffeeScript. Motivation was problems getting the original module running on v6 of Node.js.
+Inspired by [selenium-download](https://github.com/groupon/selenium-download) but written in ES6 instead of CoffeeScript. Motivation was problems getting the original module running on v6 of Node.js. The latest version of [selenium-download](https://github.com/groupon/selenium-download) now works with v6 so I encourage you to use to use that. I will, however, still maintain this module since I've already published it.
 
 ## Usage
 
