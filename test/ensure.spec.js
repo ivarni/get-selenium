@@ -55,8 +55,6 @@ describe('ensure', function() {
         });
     });
 
-
-
     describe('if target directory does not exist', async function() {
 
         it('creates it', async function() {

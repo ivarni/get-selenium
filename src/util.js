@@ -7,19 +7,12 @@ import request from 'request';
 const latestChromedriverVersionUrl = 'http://chromedriver.storage.googleapis.com/LATEST_RELEASE';
 const fallbackChromedriverVersion = '2.22';
 
-const parseHashes = rawHash => {
-    const parse = (memo, hash) => {
-        const result = memo;
+export const parseHashes = rawHash =>
+    rawHash.split(',').reduce((memo, hash) => {
         const parts = hash.trim().split('=');
-        const key = parts[0];
         const value = parts.splice(1).join('=');
-        result[key] = value;
-        return result;
-    };
-
-    const hashes = rawHash.split(',');
-    return hashes.reduce(parse, {});
-};
+        return { ...memo, ...{ [parts[0]]: value } };
+    }, {});
 
 const getLatestChromedriverVersion = () =>
     new Promise(resolve => {
@@ -103,5 +96,7 @@ export const unlink = filePath =>
         });
     });
 
+/* eslint-disable no-console */
 export const logger = message =>
     console.log(`[${time()}: get-selenium] ${message}`);
+/* eslint-enable no-console */
