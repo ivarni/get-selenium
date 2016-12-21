@@ -15,11 +15,11 @@ export const parseHashes = rawHash =>
     }, {});
 
 const getLatestChromedriverVersion = () =>
-    new Promise(resolve => {
+    new Promise((resolve) => {
         let version = fallbackChromedriverVersion;
         request.get(latestChromedriverVersionUrl)
-            .on('data', data => { version = data.toString(); })
-            .on('error', error => { throw new Error(error); })
+            .on('data', (data) => { version = data.toString(); })
+            .on('error', (error) => { throw new Error(error); })
             .on('end', () => resolve(version.trim()));
     });
 
@@ -50,7 +50,7 @@ export async function getChromedriverUrl() {
 
 export const unzip = file =>
     new Promise((resolve, reject) => {
-        extract(file, { dir: path.dirname(file) }, err => {
+        extract(file, { dir: path.dirname(file) }, (err) => {
             if (err) {
                 return reject(err);
             }
@@ -62,7 +62,7 @@ export const getFile = (url, savePath, saveName) =>
     new Promise((resolve, reject) => {
         let hash;
         request(url)
-            .on('response', response => {
+            .on('response', (response) => {
                 hash = parseHashes(response.headers['x-goog-hash']).md5;
             })
             .on('error', error => reject(error))
@@ -88,7 +88,7 @@ export const checkHash = (filePath, hash) =>
 
 export const unlink = filePath =>
     new Promise((resolve, reject) => {
-        fs.unlink(filePath, err => {
+        fs.unlink(filePath, (err) => {
             if (err) {
                 return reject(err);
             }

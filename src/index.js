@@ -16,13 +16,13 @@ const defaultOptions = {
 };
 
 /* eslint-disable func-names */
-const ensure = async function(target, options = defaultOptions) {
+const ensure = async function (target, options = defaultOptions) {
     await makeDir(target);
     await selenium(target, options);
     await chromedriver(target, options);
 };
 
-const update = async function(target, options = defaultOptions) {
+const update = async function (target, options = defaultOptions) {
     const files = await globber(path.join(target, '**/*'));
     await Promise.all(files.map(file => unlink(file)));
     await ensure(target, options);

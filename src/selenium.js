@@ -15,7 +15,7 @@ const url = `http://selenium-release.storage.googleapis.com/${minorVersion}/sele
 
 let log = logger;
 
-export default async function(targetFolder, options) {
+export default async function (targetFolder, options) {
     if (!options.verbose) {
         log = f => f;
     }

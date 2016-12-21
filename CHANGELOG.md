@@ -5,6 +5,9 @@
     ### 1.1.1
     - Clarify that original module now works newest Node.js
 
+    ### 1.1.2
+    - Updated dependencies, put `glob` in the right block
+
 ## 1.0.0
 - First release
 
